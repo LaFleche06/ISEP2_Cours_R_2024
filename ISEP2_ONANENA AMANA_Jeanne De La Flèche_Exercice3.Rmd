@@ -1,0 +1,110 @@
+---
+title: "Rapport"
+author: "ONANENA AMANA Jeanne De La Flèche"
+date: "2024-03-09"
+output: pdf_document
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+Dans une étude fictive, 300 profils ont été simulés, reflétant une diversité de caractéristiques démographiques et socio-professionnelles.Pour les variables numériques telles que l'âge, le nombre d'enfants, le nombre de voyages par an, le niveau de stress, les heures travaillées par semaine et le revenu annuel, nous inclurons :
+La moyenne
+La médiane (qui représente la valeur centrale)
+L'écart type (qui indique la dispersion des données autour de la moyenne)
+Les valeurs minimales et maximales
+Les quartiles (25ème, 50ème et 75ème percentiles)
+
+Pour les variables catégorielles telles que le sexe, la ville, le statut matrimonial, la profession, l'état de santé et le niveau d'éducation, nous inclurons:
+La distribution des différentes catégories
+Les fréquences relatives ou les pourcentages pour chaque catégorie
+
+```{r cars}
+#définir le nombre d'observations
+nb_observations <- 300
+#génération des deonnées
+
+nom <- c("Diop", "Ndiaye", "Sow", "Fall", "Diallo", "Gaye", "Cisse", "Thiam", "Sarr", "Niang")
+prenom <- c("Fatou", "Mamadou", "Aissatou", "Oumar", "Kadiatou", "Ibrahima", "Khady", "Cheikh", "Aminata", "Modou")
+age <- sample(18:65, nb_observations, replace = TRUE)
+sexe <- sample(c("Homme", "Femme"), nb_observations, replace = TRUE)
+ville <- c("Dakar", "Thiès", "Saint-Louis", "Tambacounda", "Kaolack", "Ziguinchor")
+quartier <- c("Medina", "Sicap", "HLM", "Ouakam", "Grand Dakar", "Fass")
+region <- c("Dakar", "Thiès", "Saint-Louis", "Tambacounda", "Kaolack", "Ziguinchor")
+statut_matrimonial <- sample(c("Célibataire", "Marié(e)", "Divorcé(e)", "Veuf/Veuve"), nb_observations, replace = TRUE)
+nombre_enfants <- sample(0:10, nb_observations, replace = TRUE)
+profession <- c("Enseignant(e)", "Ingénieur(e)", "Commerçant(e)", "Fonctionnaire", "Artisan(e)", "Étudiant(e)")
+nombre_voyages_an <- sample(0:30, nb_observations, replace = TRUE)
+niveau_stress <- sample(1:10, nb_observations, replace = TRUE)
+etat_sante <- sample(c("Bon", "Mauvais", "Moyen"), nb_observations, replace = TRUE)
+heures_travaillees_par_semaine <- sample(20:50, nb_observations, replace = TRUE)
+niveau_education <- c("Primaire", "Secondaire", "Supérieur")
+revenu_annuel <- sample(200000:1000000, nb_observations, replace = TRUE)
+
+data <- data.frame(
+  Nom = sample(nom, nb_observations, replace = TRUE),
+  Prenom = sample(prenom, nb_observations, replace = TRUE),
+  Age = age,
+  Sexe = sexe,
+  Ville = sample(ville, nb_observations, replace = TRUE),
+  Quartier = sample(quartier, nb_observations, replace = TRUE),
+  Region = sample(region, nb_observations, replace = TRUE),
+  Statut_Matrimonial = statut_matrimonial,
+  Nombre_Enfants = nombre_enfants,
+  Profession = sample(profession, nb_observations, replace = TRUE),
+  Nombre_Voyages_An = nombre_voyages_an,
+  Niveau_Stress = niveau_stress,
+  Etat_Sante = etat_sante,
+  Heures_Travaillees_Semaine = heures_travaillees_par_semaine,
+  Niveau_Education = sample(niveau_education, nb_observations, replace = TRUE),
+  Revenu_Annuel = revenu_annuel
+)
+
+
+summary(data)
+```
+
+## Statistiques descriptives
+
+Nous commençons par examiner les variables quantitatives de notre ensemble de données. L'âge moyen des individus est de `r mean(data$Age)` ans, avec un écart-type de `r sd(data$Age)`. Cela suggère une distribution relativement homogène autour de la moyenne, bien que la présence notable de personnes âgées contribue à une certaine variabilité.
+
+En ce qui concerne le nombre d'enfants, la moyenne est de `r mean(data$Nombre_Enfants)`, avec un écart-type de `r sd(data$Nombre_Enfants)`. Cette variation indique une diversité dans la taille des familles représentées dans notre échantillon.
+
+Le niveau de stress moyen est évalué à `r mean(data$Niveau_Stress)`, avec un écart-type de `r sd(data$Niveau_Stress)`. Cette mesure suggère une dispersion des niveaux de stress au sein de la population étudiée.
+
+Quant au revenu annuel moyen, il s'élève à `r mean(data$Revenu_Annuel)` FCFA, avec un écart-type de `r sd(data$Revenu_Annuel)`. Cette variation témoigne d'une disparité économique significative parmi les individus de notre échantillon.
+
+Ces statistiques descriptives nous offrent un aperçu de la diversité et de la distribution de nos variables quantitatives, soulignant des tendances et des variations importantes au sein de notre ensemble de données.
+
+
+## Visualisation des données
+
+
+```{r}
+library(ggplot2)
+ggplot(data, aes(x = Age)) +
+  geom_histogram(binwidth = 5, fill = "blue", color = "black") +
+  labs(title = "Distribution de l'âge", x = "Âge", y = "Fréquence") +
+  theme_minimal()
+```
+
+```{r}
+ggplot(data, aes(x = Sexe)) +
+  geom_bar(fill = "green", color = "black") +
+  labs(title = "Répartition par sexe", x = "Sexe", y = "Nombre") +
+  theme_minimal()
+
+```
+
+
+```{r}
+ggplot(data, aes(x = Niveau_Education)) +
+  geom_bar(fill = "pink", color = "black") +
+  labs(title = "Répartition par niveau d'éducation", x = "Niveau d'Éducation", y = "Nombre") +
+  theme_minimal()
+```
+
